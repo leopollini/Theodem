@@ -25,6 +25,7 @@ General:
 	- default type is Set, always refered to implicitly (all variables are also type Set)
 	- type field is treated as a property
 	- Theorems (field extract) and operations (field returns_list) can return a map of variables, in which is said where to get the variable (_new if the variable is created inside the return field, args if it was one of the arguments...)
+    - Every 'rvalue' variable (eg. arguments declared using operation) is instanced as a hidden variable (name hashed from args and operation name)
 
 Fields Types:
 	- "variables": {"var_name":[]}

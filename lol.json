@@ -5,26 +5,39 @@
 		{
 			"description":"A isin B <=> (foreach a: (a is in A => a is in b))",
 			"kind":"statement",
-			"args":{"A":[{"type":"Set"}], "B":[{"type":"Set"}]}
+			"args":{"A":[{"type":"_Set"}], "B":[{"type":"_Set"}]}
 		},
 		"equals":
 		{
 			"description":"A = B",
 			"kind":"statement",
-			"args":{"A":[{"type":"Set"}], "B":[{"type":"Set"}]}
+			"args":{"A":[{"type":"_Set"}], "B":[{"type":"_Set"}]}
 		},
 		"belongs":
 		{
 			"description":"A is in B",
 			"kind":"statement",
-			"args":{"A":[{"type":"Set"}], "B":[{"type":"Set"}]}
+			"args":{"A":[{"type":"_Set"}], "B":[{"type":"_Set"}]}
 		},
 		"has":
 		{
 			"description":"A has B",
 			"kind":"statement",
-			"args":{"A":[{"type":"Set"}], "B":[{"type":"Set"}]},
+			"args":{"A":[{"type":"_Set"}], "B":[{"type":"_Set"}]},
 			"equiv":[{"statement":"belongs", "args":{"A":"B","B":"A"}}]
+		},
+		"implies":
+		{
+			"description":"P implies Q",
+			"kind":"logic",
+			"args":{"P":[{"type":"_Logic"}], "Q":[{"type":"_Logic"}]}
+		},
+		"implied":
+		{
+			"description":"Q implies P",
+			"kind":"logic",
+			"args":{"Q":[{"type":"_Logic"}], "P":[{"type":"_Logic"}]},
+			"equiv":[{"statement":"implies", "args":{"P":"Q","Q":"P"}}]
 		}
 	},
 	"property":
@@ -33,38 +46,38 @@
 		{
 			"description":"This equals A",
 			"kind":"property",
-			"args":{"A":[{"type":"Set"}]},
+			"args":{"A":[{"type":"_Set"}]},
 			"equiv":[{"statement":"equals", "args":{"A":"_THIS","B":"A"}}]
 		},
-		"superset":
+		"super_Set":
 		{
-			"description":"this set includes A",
+			"description":"this _Set includes A",
 			"kind":"property",
-			"args":{"A":[{"type":"Set"}]},
+			"args":{"A":[{"type":"_Set"}]},
 			"equiv": [{"statement":"isin", "args":{"A":"A","B":"_THIS"}}],
-			"also": [{"operation":"append_property", "args":{"A":"A","P":{"property":"subset", "args":{"A":"_THIS"}}}}]
+			"also": [{"operation":"append_property", "args":{"A":"A","P":{"property":"sub_Set", "args":{"A":"_THIS"}}}}]
 		},
-		"subset":
+		"sub_Set":
 		{
-			"description":"this set is included in A",
+			"description":"this _Set is included in A",
 			"kind":"property",
-			"args":{"A":[{"type":"Set"}]},
+			"args":{"A":[{"type":"_Set"}]},
 			"equiv": [{"statement":"isin", "args":{"A":"_THIS","B":"A"}}],
-			"also": [{"operation":"append_property", "args":{"A":"A","P":{"property":"superset", "args":{"A":"_THIS"}}}}]
+			"also": [{"operation":"append_property", "args":{"A":"A","P":{"property":"super_Set", "args":{"A":"_THIS"}}}}]
 		},
 		"contains":
 		{
-			"description":"this set has A inside",
+			"description":"this _Set has A inside",
 			"kind":"property",
-			"args":{"A":[{"type":"Set"}]},
+			"args":{"A":[{"type":"_Set"}]},
 			"equiv": [{"statement":"belongs", "args":{"A":"A","B":"_THIS"}}],
 			"also": [{"operation":"append_property", "args":{"A":"A","P":{"property":"iselem", "args":{"A":"_THIS"}}}}]
 		},
 		"iselem":
 		{
-			"description":"this set is inside A",
+			"description":"this _Set is inside A",
 			"kind":"_Property",
-			"args":{"A":[{"type":"Set"}]},
+			"args":{"A":[{"type":"_Set"}]},
 			"equiv": [{"statement":"belongs", "args":{"A":"_THIS","B":"A"}}],
 			"also": [{"operation":"append_property", "args":{"A":"A","P":{"property":"contains", "args":{"A":"_THIS"}}}}]
 		}
@@ -74,7 +87,7 @@
 		"copy":
 		{
 			"description":"returns a copy of the input variable",
-			"args":{"A":[{"type":"Set"}]},
+			"args":{"A":[{"type":"_Set"}]},
 			"returns":
 			{
 				"returns_list": {"B":"_new"},
@@ -85,37 +98,37 @@
 		"union":
 		{
 			"description":"A union B => C",
-			"args":{"A":[{"type":"Set"}], "B":[{"type":"Set"}]},
+			"args":{"A":[{"type":"_Set"}], "B":[{"type":"_Set"}]},
 			"returns":
 			{
 				"returns_list": {"C":"_new"},
 				"C":
 				[
-					{"type":"Set"},
-					{"property":"superset", "args":{"A":"A"}},
-					{"property":"superset", "args":{"A":"B"}}
+					{"type":"_Set"},
+					{"property":"super_Set", "args":{"A":"A"}},
+					{"property":"super_Set", "args":{"A":"B"}}
 				]
 			}
 		},
 		"inter":
 		{
 			"description":"A inter B => C (intersect)",
-			"args":{"A":[{"type":"Set"}], "B":[{"type":"Set"}]},
+			"args":{"A":[{"type":"_Set"}], "B":[{"type":"_Set"}]},
 			"returns":
 			{
 				"returns_list": {"C":"_new"},
 				"C":
 				[
-					{"type":"Set"},
-					{"property":"subset", "args":{"A":"A"}},
-					{"property":"subset", "args":{"A":"B"}}
+					{"type":"_Set"},
+					{"property":"sub_Set", "args":{"A":"A"}},
+					{"property":"sub_Set", "args":{"A":"B"}}
 				]
 			}
 		},
 		"append_property":
 		{
 			"description":"Appends property P to A",
-			"args":{"A":[{"type":"Set"}], "P":[{"type":"_Property"}]},
+			"args":{"A":[{"type":"_Set"}], "P":[{"type":"_Property"}]},
 			"returns":
 			{
 				"returns_list": {"A":"args"},
@@ -129,8 +142,8 @@
 		},
 		"add_type":
 		{
-			"description":"Sets A to type T",
-			"args":{"A":[{"type":"Set"}], "T":[{"type":"_Type"}]},
+			"description":"_Sets A to type T",
+			"args":{"A":[{"type":"_Set"}], "T":[{"type":"_Type"}]},
 			"returns":
 			{
 				"returns_list": {"A":"args"},
@@ -145,7 +158,7 @@
 		"singleton":
 		{
 			"description":"Returns a singleton containing A and only A",
-			"args":{"A":[{"type":"Set"}]},
+			"args":{"A":[{"type":"_Set"}]},
 			"returns":
 			{
 				"returns_list": {"B":"_new"},
@@ -159,7 +172,7 @@
 		"pair":
 		{
 			"description":"Returns a singleton containing A and only A",
-			"args":{"A":[{"type":"Set"}], "B":[{"type":"Set"}]},
+			"args":{"A":[{"type":"_Set"}], "B":[{"type":"_Set"}]},
 			"returns":
 			{
 				"returns_list": {"C":"_new"},
@@ -174,7 +187,7 @@
 	},
 	"type":
 	{
-		"singleton":{"args":{"A":[{"type":"Set"}]}, "requires":[{"property":"contains", "args":[{"A":"A"}]}],"inheritable":[]},
+		"singleton":{"args":{"A":[{"type":"_Set"}]}, "requires":[{"property":"contains", "args":[{"A":"A"}]}],"inheritable":[]},
 		"ordered_pair":{"args":{"A":[],"B":[]}, "requires":
 			[
 				{
@@ -189,7 +202,7 @@
 			"description":"ordered pair, contains {A} and {A union B}",
 			"inheritable":[]
 		},
-		"pair":{"args":{"A":[{"type":"Set"}], "B":[{"type":"Set"}]}, "requires":[{"property":"contains", "args":[{"A":"A"}]},{"property":"contains", "args":[{"A":"B"}]}]}
+		"pair":{"args":{"A":[{"type":"_Set"}], "B":[{"type":"_Set"}]}, "requires":[{"property":"contains", "args":[{"A":"A"}]},{"property":"contains", "args":[{"A":"B"}]}]}
 	},
 	"theorem":
 	{
@@ -199,7 +212,7 @@
 			"kind":"axiom",
 			"hypothesis":
 			{
-				"args": {"a":[{"type":"Set"}], "b":[{"type":"Set"}]},
+				"args": {"a":[{"type":"_Set"}], "b":[{"type":"_Set"}]},
 				"requires":
 				[
 					{"statement":"isin", "args":{"A":"b","B":"a"}},
@@ -214,13 +227,13 @@
 			{}
 		},
 
-		"set_trans":
+		"_Set_trans":
 		{
 			"description":"A in B in C => A in C",
 			"kind":"axiom",
 			"hypothesis":
 			{
-				"args": {"A":[{"type":"Set"}], "B":[{"type":"Set"}], "C":[{"type":"Set"}]},
+				"args": {"A":[{"type":"_Set"}], "B":[{"type":"_Set"}], "C":[{"type":"_Set"}]},
 				"requires":
 				[
 					{"statement":"isin", "args":{"A":"B","B":"C"}},
@@ -241,15 +254,15 @@
 			"kind":"axiom",
 			"hypothesis":
 			{
-				"args": {"A":[], "B":[], "C":[{"type":"Set"}]},
+				"args": {"A":[], "B":[], "C":[{"type":"_Set"}]},
 				"A":
 				[
-					{"type":"Set"},
+					{"type":"_Set"},
 					{"property":"equalsto","A":"B"}
 				],
 				"B":
 				[
-					{"type":"Set"},
+					{"type":"_Set"},
 					{"property":"equalsto","A":"C"}
 				]
 			},
@@ -266,7 +279,7 @@
 			"description":"A inter B = A unite B => A = B",
 			"hypothesis":
 			{
-				"args": {"a":[{"type":"Set"}], "b":[{"type":"Set"}]},
+				"args": {"a":[{"type":"_Set"}], "b":[{"type":"_Set"}]},
 				"requires":
 				[
 					{
@@ -288,7 +301,7 @@
 			"theorems":
 			[
 				"axiom0",
-				"set_trans"
+				"_Set_trans"
 			],
 			"extract":
 			{
@@ -331,13 +344,13 @@
 						"A":"a",
 						"P":
 						{
-							"property":"subset",
+							"property":"sub_Set",
 							"args":{"A":"b"}
 						}
 					},
 					"proof":
 					{
-						"theorem":"set_trans",
+						"theorem":"_Set_trans",
 						"args":{"A":"a", "B":"C", "C":"b"}
 					}
 				},
@@ -349,12 +362,12 @@
 						"A":"b",
 						"P":
 						{
-							"property":"subset",
+							"property":"sub_Set",
 							"args":{"A":"a"}
 						}
 					},
 					"proof":{
-						"theorem":"set_trans",
+						"theorem":"_Set_trans",
 						"args":{"A":"b", "B":"C", "C":"a"}
 					}
 				},

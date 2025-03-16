@@ -187,6 +187,7 @@
 	},
 	"type":
 	{
+		"_set":{},
 		"singleton":{"args":{"A":[{"type":"_Set"}]}, "requires":[{"property":"contains", "args":[{"A":"A"}]}],"inheritable":[]},
 		"ordered_pair":{"args":{"A":[],"B":[]}, "requires":
 			[
@@ -276,7 +277,7 @@
 
 		"loltheorem":
 		{
-			"description":"A inter B = A unite B => A = B",
+			"description":"A inter B = A unionz B => A = B",
 			"hypothesis":
 			{
 				"args": {"a":[{"type":"_Set"}], "b":[{"type":"_Set"}]},

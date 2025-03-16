@@ -19,6 +19,9 @@ class TypeInstance:
 	def __getattr__(self, item):
 		return None
 
+	def __str__(self):
+		return self.name
+
 # type info container interface
 class Type(Initializer):
 	def __init__(self, content, name):
@@ -41,3 +44,6 @@ class DeclaredTypes:
 	def getInstance(name, args):
 		print(f"looking for type {name} to instance...")
 		return DeclaredTypes.types.get(name).getInstance(args)
+
+def get_type_instance(name, args):
+	return DeclaredTypes.getInstance(name, args)

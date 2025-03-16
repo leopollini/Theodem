@@ -19,6 +19,9 @@ class StatementInstance:
 	def __getattr__(self, item):
 		return None
 
+	def __str__(self):
+		return self.name
+
 # statement info container interface
 class Statement(Initializer):
 	def __init__(self, content, name):

@@ -6,6 +6,7 @@ class PropertyInstance:
 	def __init__(self,vals,args,name):
 		self.name = name
 		self.args = {}
+		print("NO TYPECHECK DONE")
 		for a in args:
 			self.args[a] = vals[a]
 			if DEBUG_MODE:
@@ -18,6 +19,9 @@ class PropertyInstance:
 	# in case attribute is not found
 	def __getattr__(self, item):
 		return None
+
+	def __str__(self):
+		return f"{self.name} {self.args.values()}"
 
 # property info container interface
 class Property(Initializer):
@@ -41,3 +45,6 @@ class DeclaredProperties:
 	def getInstance(name, args):
 		print(f"looking for property {name} to instance...")
 		return DeclaredProperties.properties.get(name).getInstance(args)
+
+def get_property_instance(name, args):
+	return DeclaredProperties.getInstance(name, args)

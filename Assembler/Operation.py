@@ -19,6 +19,9 @@ class OperationInstance:
 	def __getattr__(self, item):
 		return None
 
+	def __str__(self):
+		return self.name
+
 # operation info container interface
 class Operation(Initializer):
 	def __init__(self, content, name):

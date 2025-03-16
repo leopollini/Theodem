@@ -6,3 +6,4 @@ class Initializer:
 		self.kind = content.get("kind", "")
 		self.equiv = content.get("equiv", [])
 		self.content = content
+

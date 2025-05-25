@@ -8,4 +8,3 @@ class IStatement(IObject):
         self.variables = content.get("variables", {})
         self.equivalent = content.get("equivalent", [])
 
-

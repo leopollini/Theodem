@@ -152,7 +152,7 @@
 		{
 			"description":"(A inter B) = (A union B) => A = B",
 			"type": "theorem",
-			"variables": {"A": "Set","B": "Set", "_uinit_C": "Set"},
+			"variables": {"A": "Set","B": "Set"},
 			"suppose": [
 				{"statement":"equals","args": {
 					"A": {

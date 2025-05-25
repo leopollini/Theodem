@@ -10,12 +10,15 @@ class Theorem(IStatement):
         if not silent:
             print(f"Created new theorem '{name}': {content}")
 
-    def vars_init(self):
-        res = {}
-        for varname, kind in self.variables.items():
-            res[varname] = Variable(varname, kind)
+    def vars_init(self) -> list:
+        res = []
 
-    def statements_init(self):
+        # variables which are defined in the hypothesis
+        for varname, kind in self.variables.items():
+            res.append(Variable(varname, kind))
+        return res
+
+    def statements_init(self) -> list:
         from Assembler_II.Theodem import Theodem
         res = []
         for what in self.hypothesis :
@@ -25,12 +28,14 @@ class Theorem(IStatement):
             elif what.get("theorem", False):
                 if not Theodem.theorems.get(what["theorem"], False):
                     print(Theodem.theorems[what["theorem"]])
-                    raise TypeError(f"Theorem '{what["theorem"]}' not found while proving {self.theorem.name}")
+                    raise TypeError(f"Theorem '{what["theorem"]}' not found while proving {self.name}")
                 print(f"Theorem '{what["theorem"]}' required and found")
             else:
                 raise TypeError("requiring something else...")
 
-    def operate(self, args):
+        return res
+
+    def operate(self, args) -> None:
         from Assembler_II.Theodem import Theodem
         res = []
         for r in self.returns:

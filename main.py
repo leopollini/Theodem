@@ -1,19 +1,10 @@
-from Assembler.Property import PropertyInstance, DeclaredProperties
-from Assembler.Theodem import Theodem
-from Assembler.Variables import Variable
-from Assembler.macros import encode_json
+from Assembler_II.Statement import Statement
+from Assembler_II.StatementInstance import StatementInstance
+from Assembler_II.Theorem import Theorem
+from Assembler_II.Theodem import Theodem
+from Assembler_II.Prover import Prover
 
 with open('lol.json', 'r') as file:
-	Theodem.init(file)
+	Theodem.load_file(file)
 
-prop = DeclaredProperties.getInstance('equalsto', {'A':"B"})
-prop1 = DeclaredProperties.getInstance('equalsto', {'A':"A"})
-prop2 = DeclaredProperties.getInstance('equalsto', {'A':"A"})
-lol = Variable([prop, prop1])
-klar = Variable([prop, prop2],"klar")
-
-print(lol == klar)
-
-print("\n\n")
-
-Theodem.prove("loltheorem")
+Prover("loltheorem")
